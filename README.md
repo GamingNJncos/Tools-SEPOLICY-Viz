@@ -4,6 +4,11 @@ Interactive visualization toolkit for Android SELinux policy analysis. Loads a c
 
 No server required. Open `index.html` in a browser, drop a policy JSON, start auditing.
 
+## Screenshots
+![Landing Page](screenshots/LandingPage.png)
+![Pivot Finder](screenshots/PivotFinder.png)
+![Pivot Finder - High Value ](screenshots/PivotFinder_HighVal.png)
+
 ## Quick Start
 
 1. Open `index.html` in Chrome/Firefox/Edge
