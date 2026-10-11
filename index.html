@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SELinux Policy Visualizer</title>
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<div class="scanlines" aria-hidden="true"></div>
+
+<div id="top-bar">
+<header id="app-header">
+  <canvas id="copper-canvas" aria-hidden="true"></canvas>
+  <div class="header-left">
+    <span class="logo logo-chrome">[ SEPOLICY::VIZ ]</span>
+    <span class="meta-info" id="meta-info"></span>
+  </div>
+  <div class="header-center">
+    <div class="search-wrap">
+      <span class="search-caret">&gt;</span>
+      <input id="search-input" type="text" placeholder="search domain or target type..." autocomplete="off" spellcheck="false" disabled>
+      <div id="search-suggest" class="search-suggest hidden"></div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button id="btn-theme-menu" class="btn-ghost" type="button">&#9680; THEME</button>
+    <button id="btn-effects-toggle" class="btn-ghost" type="button">&#10024; FX ON</button>
+    <button id="btn-views-menu" class="btn-ghost amber hidden" type="button">&#9881; VIEWS</button>
+    <button id="btn-load-new" class="btn-ghost hidden" type="button">LOAD NEW FILE</button>
+  </div>
+</header>
+<div id="theme-menu-panel" class="settings-panel hidden">
+  <div class="sp-header">THEME</div>
+  <div class="sp-section">
+    <div class="sp-label">PRESET</div>
+    <div id="theme-preset-list" class="sp-list"></div>
+  </div>
+  <div class="sp-section">
+    <div class="sp-label">BACKGROUND OVERRIDE</div>
+    <div class="sp-row">
+      <input type="color" id="theme-bg-picker" class="sp-color-picker">
+      <span id="theme-bg-hex" class="sp-hex">#0a0a1a</span>
+      <button id="theme-bg-save" class="btn-ghost sp-save" type="button">SAVE</button>
+      <button id="theme-bg-clear" class="btn-ghost sp-clear" type="button">CLEAR</button>
+    </div>
+    <div class="sp-hint">Overrides all presets. Persists across reloads.</div>
+  </div>
+</div>
+<div id="views-menu-panel" class="views-menu-panel hidden">
+  <div class="vm-header">TOGGLE VIEWS</div>
+  <div class="vm-list"></div>
+</div>
+<nav id="view-tabs" class="view-tabs hidden"></nav>
+</div>
+
+<main id="app-main">
+  <section id="view-loader" class="view active">
+    <canvas id="matrix-rain" aria-hidden="true"></canvas>
+    <div id="drop-zone" class="drop-zone" tabindex="0">
+      <canvas id="raster-glow" class="raster-glow" aria-hidden="true"></canvas>
+      <div class="drop-content">
+        <div class="drop-icon">&#9670;</div>
+        <div class="drop-title" id="drop-title">LOAD SELINUX POLICY JSON</div>
+        <div class="drop-sub">drag and drop or click to browse</div>
+        <div class="drop-hint" id="drop-hint"></div>
+        <div class="drop-howto">
+          <div class="howto-header">HOW TO GET YOUR POLICY JSON</div>
+          <div class="howto-steps">
+            <div class="howto-step"><span class="howto-num">1</span><span class="howto-text">Pull the compiled policy from your device:<br><code>adb pull /sys/fs/selinux/policy ./policy.bin</code></span></div>
+            <div class="howto-step"><span class="howto-num">2</span><span class="howto-text">Install SETools (<code>apt install setools</code>)</span></div>
+            <div class="howto-step"><span class="howto-num">3</span><span class="howto-text">Run the extractor:<br><code>python3 sepolicy_extract.py policy.bin -o policy.json</code></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="file" id="file-input" accept=".json" style="display:none">
+  </section>
+  <section id="view-container"></section>
+</main>
+
+<div class="tooltip hidden" id="tooltip"></div>
+<div id="floating-windows-layer"></div>
+
+<script src="js/d3.v7.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/views.js"></script>
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
